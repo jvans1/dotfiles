@@ -5,13 +5,33 @@ if empty(glob('~/.config/nvim/autoload/plug.vim'))
 endif
 
 call plug#begin('~/.local/share/nvim/plugged')
+Plug 'Raimondi/delimitMate'
 Plug 'fatih/vim-go'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'rking/ag.vim'
 Plug 'scrooloose/nerdtree' 
 Plug 'tpope/vim-fugitive'
 Plug 'yegappan/mru'
+Plug 'https://github.com/tell-k/vim-autopep8'
+Plug 'https://github.com/tpope/vim-surround'
+Plug 'artur-shaik/vim-javacomplete2'
+Plug 'nvie/vim-flake8'
+Plug 'vim-python/python-syntax'
 call plug#end()
+
+
+"java 
+autocmd FileType java setlocal omnifunc=javacomplete#Complete
+nmap <F4> <Plug>(JavaComplete-Imports-AddSmart)
+nmap <F5> <Plug>(JavaComplete-Imports-Add)
+nmap <F6> <Plug>(JavaComplete-Imports-AddMissing)
+nmap <F7> <Plug>(JavaComplete-Imports-RemoveUnused)
+
+
+"autopep 8
+let g:autopep8_on_save = 0
+let g:autopep8_disable_show_diff=0
+
 
 " File tree browser
 map \ :NERDTreeToggle<CR>
@@ -46,3 +66,11 @@ map <leader>rt :!/usr/local/bin/ctags -R --exclude=.git --exclude=build --exclud
 
 "mru
 noremap <leader>m :MRU<ENTER> | fzf
+
+"auto flake8
+let g:flake8_show_quickfix=0  " don't show
+let g:flake8_show_in_gutter=1
+nmap <leader>ff :call flake8#Flake8()<cr>
+
+"python syntax
+let g:python_highlight_all=1
