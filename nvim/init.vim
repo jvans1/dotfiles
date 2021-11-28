@@ -9,11 +9,12 @@ Plug 'vim-syntastic/syntastic'
 Plug 'fatih/vim-go'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'rking/ag.vim'
+Plug 'scrooloose/nerdcommenter'
 Plug 'scrooloose/nerdtree' 
 Plug 'tpope/vim-fugitive'
 Plug 'yegappan/mru'
 Plug 'tpope/vim-surround'
-Plug 'vim-scripts/AutoClose'
+Plug 'jiangmiao/auto-pairs'
 Plug 'sheerun/vim-polyglot'
 Plug 'neoclide/coc.nvim', { 'branch': 'master', 'do': 'yarn install --frozen-lockfile' }
 call plug#end()
@@ -61,6 +62,8 @@ let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
 let g:syntastic_javascript_checkers = ['eslint']
 let g:syntastic_python_checkers = ['flake8']
+noremap [q :lnext<ENTER>
+noremap ]q :lprevious<ENTER>
 "end syntastic
 "
 "coc config
@@ -92,3 +95,5 @@ function! s:show_documentation()
     execute '!' . &keywordprg . " " . expand('<cword>')
   endif
 endfunction
+
+
