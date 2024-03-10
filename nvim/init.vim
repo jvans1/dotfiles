@@ -6,6 +6,7 @@ endif
 
 call plug#begin('~/.local/share/nvim/plugged')
 Plug 'vim-syntastic/syntastic'
+Plug 'neovimhaskell/haskell-vim'
 Plug 'fatih/vim-go'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'rking/ag.vim'
@@ -16,9 +17,11 @@ Plug 'yegappan/mru'
 Plug 'tpope/vim-surround'
 Plug 'jiangmiao/auto-pairs'
 Plug 'sheerun/vim-polyglot'
-Plug 'neoclide/coc.nvim', { 'branch': 'master', 'do': 'yarn install --frozen-lockfile' }
 call plug#end()
 
+syntax on
+filetype plugin indent on
+filetype on
 " File tree browser
 map \ :NERDTreeToggle<CR>
 
@@ -41,11 +44,18 @@ noremap <leader>m :Mru<ENTER>
 " Go plugins
 nmap <leader>b :GoTestFunc<CR>
 
-syntax on
 
 noremap <space> :noh<cr>
 
 map <leader>rt :!/usr/local/bin/ctags -R --exclude=.git --exclude=build --exclude=log *  <CR>
+"haskell-vim
+let g:haskell_enable_quantification = 1   " to enable highlighting of `forall`
+let g:haskell_enable_recursivedo = 1      " to enable highlighting of `mdo` and `rec`
+let g:haskell_enable_arrowsyntax = 1      " to enable highlighting of `proc`
+let g:haskell_enable_pattern_synonyms = 1 " to enable highlighting of `pattern`
+let g:haskell_enable_typeroles = 1        " to enable highlighting of type roles
+let g:haskell_enable_static_pointers = 1  " to enable highlighting of `static`
+let g:haskell_backpack = 1                " to enable highlighting of backpack keywords
 
 "syntastic
 set statusline+=%#warningmsg#
@@ -65,37 +75,6 @@ noremap [q :lnext<ENTER>
 noremap ]q :lprevious<ENTER>
 "end syntastic
 "
-"coc config
-"" TextEdit might fail if hidden is not set.
-set hidden
-
-" Some servers have issues with backup files, see #649.
-set nobackup
-set nowritebackup
-
-" Make <CR> auto-select the first completion item and notify coc.nvim to
-" format on enter, <cr> could be remapped by other vim plugin
-inoremap <silent><expr> <enter> pumvisible() ? coc#_select_confirm()
-                              \: "\<C-g>u\<ENTER>\<c-r>=coc#on_enter()\<CR>"
-
-
-" Use K to show documentation in preview window.
-nnoremap <silent> K :call <SID>show_documentation()<CR>
-
-function! s:show_documentation()
-  if (index(['vim','help'], &filetype) >= 0)
-    execute 'h '.expand('<cword>')
-  elseif (coc#rpc#ready())
-    call CocActionAsync('doHover')
-  else
-    execute '!' . &keywordprg . " " . expand('<cword>')
-  endif
-endfunction
-
-hi NormalFloat ctermfg=0 ctermbg=white guibg=black
-hi Pmenu ctermfg=0 ctermbg=white guibg=black
-"end coc
-
 set expandtab
 set tabstop=2
 set softtabstop=2
@@ -103,3 +82,4 @@ set shiftwidth=2
 set number
 set nowrap
 set smartindent
+
